@@ -2,12 +2,12 @@
 # Add the src and apps directories conditionally
 if (BUILD_LIB_DATAFRAME)
     # Create the shared library dataframe
-    add_library(dataframe SHARED
-        dataframe.cpp
+    add_library(DataFrame SHARED
+        DataFrame.cpp
     )
 
     # Link Boost and GSL to the dataframe shared library
-    target_link_libraries(dataframe PUBLIC
+    target_link_libraries(DataFrame PUBLIC
         Boost::json
         Boost::system
         GSL::gsl
@@ -15,7 +15,7 @@ if (BUILD_LIB_DATAFRAME)
     )
 
     # Specify the header paths for the library
-    target_include_directories(dataframe PUBLIC
+    target_include_directories(DataFrame PUBLIC
         ${Boost_INCLUDE_DIRS}
         ${CMAKE_SOURCE_DIR}/include
     )
@@ -25,9 +25,9 @@ if (BUILD_LIB_DATAFRAME)
 endif()
 
 # Add the src and apps directories conditionally
-if (BUILD_LIB_INTERPOL)
+if (BUILD_LIB_INTERPOLATION)
     # Create the shared library interpolation
-    add_library(interpolation SHARED
+    add_library(Interpolation SHARED
                 CardinalCubicSpline.cpp
                 GslPolynomialInterpolator.cpp
                 Interpolator.cpp
@@ -36,7 +36,7 @@ if (BUILD_LIB_INTERPOL)
     )
 
     # Link Boost and GSL to the interpolation shared library
-    target_link_libraries(interpolation PUBLIC
+    target_link_libraries(Interpolation PUBLIC
         Boost::json
         Boost::system
         Boost::filesystem
@@ -45,7 +45,7 @@ if (BUILD_LIB_INTERPOL)
     )
 
     # Specify the header paths for the library
-    target_include_directories(interpolation PUBLIC
+    target_include_directories(Interpolation PUBLIC
         ${Boost_INCLUDE_DIRS}
         ${CMAKE_SOURCE_DIR}/include
     )

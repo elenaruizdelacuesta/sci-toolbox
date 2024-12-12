@@ -29,4 +29,4 @@ add_subdirectory(apps)
 
 # Options to select which libraries and apps to build
 option(BUILD_LIB_DATAFRAME "Build the Datafame library and its app" ON)
-option(BUILD_LIB_INTERPOL "Build the Interpolation library and its app" ON)
+option(BUILD_LIB_INTERPOLATION "Build the Interpolation library and its app" ON)

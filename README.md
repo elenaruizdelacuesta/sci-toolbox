@@ -39,7 +39,7 @@ Additionally, it includes two corresponding applications to test these modules.
 │   ├── 📄 Interpolator.hpp
 │   ├── 📄 LinearInterpolator.hpp
 │   ├── 📄 NewtonInterpolator.hpp
-│   └── 📄 dataframe.hpp
+│   └── 📄 DataFrame.hpp
 │ 
 ├── 📂 output/
 │
@@ -50,7 +50,7 @@ Additionally, it includes two corresponding applications to test these modules.
 │   ├── 📄 LinearInterpolator.cpp
 │   ├── 📄 NewtonInterpolator.cpp
 │   ├── 📝 CMakeLists.txt
-│   └── 📄 dataframe.cpp
+│   └── 📄 DataFrame.cpp
 │
 ├── 📒 .gitignore
 ├── 📝 CMakeLists.txt
@@ -89,10 +89,10 @@ cmake --build build
 
 #### Custom Builds
 
-To build only one of the two libraries and its associated applications, specify the desired options with `ON` or `OFF`. For example, to build the `dataframe` library and exclude the `interpol` library, use:
+To build only one of the two libraries and its associated applications, specify the desired options with `ON` or `OFF`. For example, to build the `DataFrame` library and exclude the `Interpolation` library, use:
 
 ```bash
-cmake -B build -DBUILD_LIB_DATAFRAME=ON -DBUILD_LIB_INTERPOL=OFF
+cmake -B build -DBUILD_LIB_DATAFRAME=ON -DBUILD_LIB_INTERPOLATION=OFF
 cmake --build build
 ```
 
