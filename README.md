@@ -138,12 +138,12 @@ The interpolation module provides tools to perform linear, polynomial and cubic 
 - **Cubic Spline Interpolation**  
   - **Cardinal Cubic B-Spline**: Implements smooth interpolation using a cubic spline basis, providing high accuracy and continuous second derivatives. Implemented using a third-party library (BOOST).
 
-  ### Usage
-  After building the project, the interpolation module can be tested using the interpol_app. This application demonstrates the accuracy and efficiency of the implemented methods.
+### Usage
+After building the project, the interpolation module can be tested using the interpol_app. This application demonstrates the accuracy and efficiency of the implemented methods.
 
-  In this case, we select the exponential function y = e^x as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of y using the exponential function, thus providing the necessary data for the interpolation.
+In this case, we select the exponential function y = e^x as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of y using the exponential function, thus providing the necessary data for the interpolation.
   
-  To carry out the interpolation, a specific interval was selected x \in [-4,4]. Within this interval, 20 test points were generated to evaluate the interpolated function.
+To carry out the interpolation, a specific interval was selected (x \in [-4,4] \). Within this interval, 20 test points were generated to evaluate the interpolated function.
 
 ### Results
 -**Efficiency**: is measured in terms of interpolation time for all test points. 
