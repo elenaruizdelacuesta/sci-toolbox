@@ -11,10 +11,10 @@ public:
     virtual double operator()(double x) const = 0;
 
     // Declaration for the data
-    void setData(const std::vector<double>& x, const std::vector<double>& y);
+    void set_data(const std::vector<double>& x, const std::vector<double>& y);
 
     // Method to check if a value x is within the range of the nodes
-    void checkRange(double x) const;
+    void check_range(double x) const;
 
 protected:
     std::vector<double> x_nodes;

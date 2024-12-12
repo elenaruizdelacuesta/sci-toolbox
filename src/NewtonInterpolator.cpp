@@ -2,13 +2,13 @@
 
 NewtonInterpolator::NewtonInterpolator(const std::vector<double>& x, const std::vector<double>& y) {
     // Call setData to store the data
-    setData(x, y);  
+    set_data(x, y);  
     // Then, initialise the coefficients
-    computeCoefficients();
+    compute_coefficients();
 }
 
 // Method for calculating Newton's coefficients (split differences)
-void NewtonInterpolator::computeCoefficients() {
+void NewtonInterpolator::compute_coefficients() {
     std::size_t n = x_nodes.size();
     coefficients.resize(n); // These coefficients represent the split differences f[x0], f[x0,x1],...
 
@@ -27,7 +27,7 @@ void NewtonInterpolator::computeCoefficients() {
 
 // Operator overload to perform interpolation on the value ‘x’
 double NewtonInterpolator::operator()(double x) const {
-    checkRange(x);
+    check_range(x);
     std::size_t n = x_nodes.size();
     double result = coefficients[n - 1];
 

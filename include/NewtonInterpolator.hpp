@@ -13,7 +13,7 @@ public:
 
 private:
     // Method for calculating Newton's coefficients
-    void computeCoefficients();
+    void compute_coefficients();
 
     std::vector<double> coefficients; // Stores Newton's coefficients
     

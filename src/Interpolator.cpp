@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 // Definition of the setData method and issues that we can experience
-void Interpolator::setData(const std::vector<double>& x, const std::vector<double>& y) {
+void Interpolator::set_data(const std::vector<double>& x, const std::vector<double>& y) {
     if (x.size() != y.size() || x.empty()) {
         throw std::invalid_argument("Vectors x and y must have the same non-zero size.");
     }
@@ -27,7 +27,7 @@ void Interpolator::setData(const std::vector<double>& x, const std::vector<doubl
 }
 
 //  Prevent invalid queries or extrapolation in unsupported methods
-void Interpolator::checkRange(double x) const {
+void Interpolator::check_range(double x) const {
     if (x < x_nodes.front() || x > x_nodes.back()) {
         throw std::out_of_range("x is outside the interpolation range.");
     }

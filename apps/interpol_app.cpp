@@ -33,7 +33,7 @@ struct Interpolators {
 
 
 // Comparing interpolation methods using tables
-Interpolators compareInterpolationMethods(const std::vector<double>& x_nodes, const std::vector<double>& y_nodes, double (*trueFunction)(double), const std::vector<double>& test_points) {
+Interpolators compare_interpolation_methods(const std::vector<double>& x_nodes, const std::vector<double>& y_nodes, double (*trueFunction)(double), const std::vector<double>& test_points) {
     
     // Create interpolators using smart pointers
     auto linearInterp = std::make_unique<LinearInterpolator>(x_nodes, y_nodes);
@@ -95,7 +95,7 @@ double measure_execution_time(std::function<void()> f) {
     return duration.count();
 }
 
-void evaluateEfficiency(const Interpolators& interpolators, const std::vector<double>& test_points) {
+void evaluate_efficiency(const Interpolators& interpolators, const std::vector<double>& test_points) {
     std::cout << std::left << std::setw(15) << "Method" 
               << std::setw(15) << "Time (seconds)" << "\n";
     std::cout << std::string(30, '-') << "\n";
@@ -130,7 +130,7 @@ void evaluateEfficiency(const Interpolators& interpolators, const std::vector<do
 }
 
 // Function for calculating interpolation errors
-std::vector<double> calculateInterpolationErrors(
+std::vector<double> calculate_interpolation_errors(
     const Interpolators& interpolators,
     const std::vector<double>& test_points,
     double (*trueFunction)(double))
@@ -182,7 +182,7 @@ std::vector<double> calculateInterpolationErrors(
     return mae_values;
 }
 
-void ConvergenceOrder(const std::vector<std::vector<double>>& mae_all) {
+void convergence_order(const std::vector<std::vector<double>>& mae_all) {
     // Methods in order
     std::vector<std::string> methods = {"Linear", "Lagrange", "Newton", "Cubic Spline"};
     std::cout << "\nOrder of Convergence:\n";
@@ -245,20 +245,20 @@ int main() {
     
         std::cout << "\nInterpolation of f(x) = e^x with n = " << n 
                 << ": True Values, Approximations from Different Methods, and Absolute Errors:\n";
-        Interpolators interpolators = compareInterpolationMethods(x_nodes, y_nodes, f1, test_points_f1);
+        Interpolators interpolators = compare_interpolation_methods(x_nodes, y_nodes, f1, test_points_f1);
         
         std::cout << "\nAccuracy with n = " << n << ":\n";
-        std::vector<double> mae = calculateInterpolationErrors(interpolators, test_points_f1, f1);
+        std::vector<double> mae = calculate_interpolation_errors(interpolators, test_points_f1, f1);
 
         std::cout << "\nEfficiency with n = " << n << ":\n";
-        evaluateEfficiency(interpolators, test_points_f1);
+        evaluate_efficiency(interpolators, test_points_f1);
 
         // Store MAE results for convergence analysis
         mae_all.push_back(mae);
     }
 
     // Calculate convergence order for the dynamic sets of nodes
-    ConvergenceOrder(mae_all);
+    convergence_order(mae_all);
 
     return 0;
 }
