@@ -137,7 +137,7 @@ std::vector<double> calculateInterpolationErrors(
 {
 
     std::cout << std::left << std::setw(15) << "Method"
-              << std::setw(20) << "RMSE"
+              << std::setw(20) << "MAE"
               << "\n";
     std::cout << std::string(30,'-') << "\n";
 
@@ -152,79 +152,68 @@ std::vector<double> calculateInterpolationErrors(
     std::vector<std::string> ordered_methods = {"Linear", "Lagrange", "Newton", "Cubic Spline"};
 
     // Calculate errors for each method
-    std::vector<double> rmse_values;
+    //std::vector<double> rmse_values;
+    std::vector<double> mae_values;
     for (const auto& method_name : ordered_methods) {
         auto interpolator = methods[method_name];
-        double total_squared_error = 0.0;
+        //double total_squared_error = 0.0;
+        double total_error = 0.0;
 
         for (double x : test_points) {
             double true_value = trueFunction(x);
             double interpolated_value = interpolator(x);
             double error = std::abs(true_value - interpolated_value);
 
-            total_squared_error += error * error;
+            //total_squared_error += error * error;
+            total_error += error;
         }
 
-        double rmse = std::sqrt(total_squared_error / test_points.size());
+        //double rmse = std::sqrt(total_squared_error / test_points.size());
+        double mae = total_error / test_points.size();
 
         // Show errors
         std::cout << std::left << std::setw(15) << method_name
-                  << std::setw(20) << rmse
+                  << std::setw(20) << mae
                   << "\n";
-        rmse_values.push_back(rmse);
+        //rmse_values.push_back(rmse);
+        mae_values.push_back(mae);
+        
     }
-    return rmse_values;
+    return mae_values;
 }
 
-void calculateConvergenceOrder(const std::vector<double>& rmse_n1, const std::vector<double>& rmse_n2, int n1, int n2) {
-    
-    double log_ratio = std::log(static_cast<double>(n2) / n1);
-
+void ConvergenceOrder(const std::vector<std::vector<double>>& mae_all) {
     // Methods in order
     std::vector<std::string> methods = {"Linear", "Lagrange", "Newton", "Cubic Spline"};
-
     std::cout << "\nOrder of Convergence:\n";
     std::cout << std::left << std::setw(15) << "Method" 
               << std::setw(15) << "Order (p)" << "\n";
     std::cout << std::string(30, '-') << "\n";
 
-    // Calculate the order for each method
-    for (size_t i = 0; i < rmse_n1.size(); ++i) {
-        double p = std::log(rmse_n1[i] / rmse_n2[i]) / log_ratio;
+    // Loop through methods
+    for (size_t i = 0; i < mae_all[0].size(); ++i) { // For each method
+        double sum_p = 0.0;
+        int count_p = 0;
+
+        // Calculate p for consecutive sets of nodes
+        for (size_t k = 2; k < mae_all.size(); ++k) { // Start from 3rd set of MAE
+            double p = std::log(mae_all[k - 1][i] / mae_all[k][i]) /
+                       std::log(static_cast<double>(k) / (k - 1));
+            sum_p += p;
+            ++count_p;
+        }
+
+        // Print the average order of convergence
+        double avg_p = sum_p / count_p;
         std::cout << std::left << std::setw(15) << methods[i]
-                  << std::setw(15) << p << "\n";
+                  << std::setw(15) << avg_p << "\n";
     }
 }
 
-
-
 int main() {
-    // Interval and number of nodes for f(x) = x^6
+
     double a_f1 = -4;
     double b_f1 = 4.0;
-    int n_f1_1 = 15;
-    int n_f1_2 = 30;
-
-    // Vectors to store the nodes and values
-    std::vector<double> x_nodes_f1_1, y_nodes_f1_1;
-    std::vector<double> x_nodes_f1_2, y_nodes_f1_2;
-
-    // Generate nodes and values for x^6
-    generate_nodes_and_values(a_f1, b_f1, n_f1_1, x_nodes_f1_1, y_nodes_f1_1, f1);
-    generate_nodes_and_values(a_f1, b_f1, n_f1_2, x_nodes_f1_2, y_nodes_f1_2, f1);
-
-    // Show generated nodes
-    std::cout << "\nNodes (x_i) and values (y_i) for f(x) = e^x with n = 15:\n";
-    for (int i = 0; i < n_f1_1; ++i) {
-        std::cout << "x[" << i << "] = " << x_nodes_f1_1[i] << ", y[" << i << "] = " << y_nodes_f1_1[i] << "\n";
-    }
-
-    std::cout << "\nNodes (x_i) and values (y_i) for f(x) = e^x with n = 30:\n";
-    for (int i = 0; i < n_f1_2; ++i) {
-        std::cout << "x[" << i << "] = " << x_nodes_f1_2[i] << ", y[" << i << "] = " << y_nodes_f1_2[i] << "\n";
-    }
-
-    // Test points
     
     // Test points
     std::vector<double> test_points_f1;
@@ -241,29 +230,36 @@ int main() {
         }
         test_points_f1.push_back(x);
     }
+
+    // Evaluate for dynamic range of nodes
+    int start_n = 5; // Starting number of nodes
+    int end_n = 10;  // Ending number of nodes
+    std::vector<std::vector<double>> mae_all; // To store MAEs for different sets of nodes
+
+     for (int n = start_n; n <= end_n; ++n) {
+        // Generate nodes and values
+        std::vector<double> x_nodes, y_nodes;
+        generate_nodes_and_values(a_f1, b_f1, n, x_nodes, y_nodes, f1);
+
+        // Compare interpolation methods and calculate errors
     
-    // Compare interpolation methods for f(x) = x^6
-    std::cout << "\nInterpolation of f(x) = e^x with n = 15: True Values, Approximations from Different Methods and Absolute Errors:\n";
-    Interpolators interpolators_n1 = compareInterpolationMethods(x_nodes_f1_1, y_nodes_f1_1, f1, test_points_f1);
-    std::cout << "\nInterpolation of f(x) = e^x with n = 30: True Values, Approximations from Different Methods and Absolute Errors:\n";
-    Interpolators interpolators_n2 = compareInterpolationMethods(x_nodes_f1_2, y_nodes_f1_2, f1, test_points_f1);
-    
-    // Evaluate efficiency
-    std::cout << "\nEfficiency (Time to interpolate all test points) with n = 15:\n";
-    evaluateEfficiency(interpolators_n1, test_points_f1);
+        std::cout << "\nInterpolation of f(x) = e^x with n = " << n 
+                << ": True Values, Approximations from Different Methods, and Absolute Errors:\n";
+        Interpolators interpolators = compareInterpolationMethods(x_nodes, y_nodes, f1, test_points_f1);
+        
+        std::cout << "\nAccuracy with n = " << n << ":\n";
+        std::vector<double> mae = calculateInterpolationErrors(interpolators, test_points_f1, f1);
 
-    std::cout << "\nEfficiency (Time to interpolate all test points) with n = 30:\n";
-    evaluateEfficiency(interpolators_n2, test_points_f1);  
+        std::cout << "\nEfficiency with n = " << n << ":\n";
+        evaluateEfficiency(interpolators, test_points_f1);
 
-    // Evaluate Accuracy
-    std::cout << "\nAccuracy with n = 15:\n";
-    std::vector<double> rmse_n1 = calculateInterpolationErrors(interpolators_n1, test_points_f1, f1);
+        // Store MAE results for convergence analysis
+        mae_all.push_back(mae);
+    }
 
-    std::cout << "\nAccuracy with n = 30:\n";
-    std::vector<double> rmse_n2 = calculateInterpolationErrors(interpolators_n2, test_points_f1, f1);
-
-    // Order of convergence
-    calculateConvergenceOrder(rmse_n1, rmse_n2, n_f1_1, n_f1_2);
+    // Calculate convergence order for the dynamic sets of nodes
+    ConvergenceOrder(mae_all);
 
     return 0;
 }
+   
