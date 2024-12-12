@@ -17,6 +17,9 @@ Additionally, it includes two corresponding applications to test these modules.
     - [Running the apps](#running-the-apps)
   - [Module A: Statistics](#module-a-statistics)
   - [Module B: Interpolation](#module-b-interpolation)
+    - [Features](#features)
+    - [Implementation](#implementation)
+    - [Results](#results)
   - [Authors and contributions](#authors-and-contributions)
 
 ## Project structure
@@ -129,36 +132,39 @@ for (const auto& row : df) {
 The interpolation module provides tools to perform linear, polynomial and cubic spline interpolations. It is designed to handle data efficiently and produce accurate interpolated values for a given set of points. 
 
 ### Features
-- **Linear Interpolation**
-  Implements piecewise linear interpolation for a given set of data points. Suitable for quick approximations with moderate accuracy.
+- **Linear Interpolation**: implements piecewise linear interpolation for a given set of data points. Suitable for quick approximations with moderate accuracy.
 
 - **Polynomial Interpolation**  
-  - **Lagrange Interpolation**: Uses the Lagrange form of the interpolating polynomial. Implemented using a third-party library (GSL)
-  - **Newton Interpolation**: Implements the Newton divided difference formula for efficient computation of polynomials.
-- **Cubic Spline Interpolation**  
-  - **Cardinal Cubic B-Spline**: Implements smooth interpolation using a cubic spline basis, providing high accuracy and continuous second derivatives. Implemented using a third-party library (BOOST).
+  - **Lagrange Interpolation**: uses the Lagrange form of the interpolating polynomial. Implemented using a third-party library (GSL)
+  - **Newton Interpolation**: implements the Newton divided difference formula for efficient computation of polynomials.
 
-### Usage
+- **Cubic Spline Interpolation**: implements smooth interpolation using a cubic spline basis, providing high accuracy and continuous second derivatives. Implemented using a third-party library (BOOST).
+
+### Implementation
 After building the project, the interpolation module can be tested using the interpol_app. This application demonstrates the accuracy and efficiency of the implemented methods.
 
-In this case, we select the exponential function y = e^x as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of y using the exponential function, thus providing the necessary data for the interpolation.
+In this case, we select the exponential function y = \(e^x\) as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of y using the exponential function, thus providing the necessary data for the interpolation.
   
-To carry out the interpolation, a specific interval was selected (x \in [-4,4] \). Within this interval, 20 test points were generated to evaluate the interpolated function.
+To carry out the interpolation, a specific interval was selected (x = [-4,4]). Within this interval, 20 test points were generated to evaluate the interpolated function.
 
 ### Results
-- **Efficiency**: is measured in terms of interpolation time for all test points. 
-  - **Lagrange** is the most efficient method in both cases (`n = 15` and `n = 30`), followed by Cubic Spline.  
-  - **Newton** shows similar efficiency to Cubic Spline with `n = 15` and a higher efficiency with `n = 30`.
+In addition to performing interpolation, we conducted a detailed analysis of accuracy and efficiency for each implemented interpolation method. This analysis involved dynamically varying the number of nodes from 5 to 10.
 
-- **Accuracy**: is evaluated through Root Mean Square Error (RMSE)
-  - **Lagrange** and **Newton** have the highest accuracy (lowest RMSE) in both (`n = 15` and `n = 30`).
-  - **Cubic Spline**, while less accurate than Lagrange and Newton, performs well with manageable errors in both cases.  
-  - **Linear** is significantly less accurate, especially with a lower number of points (`n = 30`).
-  
-Methods like Lagrange and Cubic Spline showed improved efficiency by taking advantage of third-party libraries that handle the complexities of interpolation more effectively.
+The results are presented in tables, with each table corresponding to a specific node count and method.
+
+- **Efficiency**: is measured in terms of interpolation time for all test points. **Lagrange** is the most efficient method followed by **Newton**.  
+
+- **Accuracy**: is evaluated through Mean Absolute Error (MAE).
+  - **Lagrange** and **Newton** have the highest accuracy (lowest MAE).
+  - **Cubic Spline**, while less accurate than Lagrange and Newton, performs well with manageable errors.
+  - **Linear** is significantly less accurate, especially with a lower number of points (`n = 5`).
 
 Additionally, it's important to be cautious with polynomial interpolation, as the Runge phenomenon can occur, especially when the number of nodes becomes large. This phenomenon causes the interpolation to produce oscillatory behavior near the edges, which can lead to decreased accuracy, making the results less reliable.
 
+- **Order of Convergence**: is calculated using the ratio between the mean absolute errors at different sets of nodes. This calculation is generally based on the logarithmic ratio between the errors as nodes are increased in successive steps, providing a measure of how the error decreases as more nodes are added.
+  - **Linear**: Linear Method has a convergence order of about 0.8, which implies a relatively slow convergence. As the number of nodes increases, the error decreases, but only moderately.
+  - **Lagrange and Newton**: Lagrange Method and Newton Method have an order of convergence of approximately 4.2. This indicates a very fast convergence, i.e. the error decreases significantly as more nodes are added.
+  - **Cubic Spline**: Cubic Spline has a convergence order of about 1.77, which reflects an intermediate convergence, not as fast as Lagrange or Newton, but faster than Linear.
 
 
 ## Authors and contributions
