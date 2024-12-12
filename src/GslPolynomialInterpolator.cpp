@@ -5,12 +5,12 @@
 
 GslPolynomialInterpolator::GslPolynomialInterpolator(const std::vector<double>& x, const std::vector<double>& y) {
     // Call setData to store the data
-    setData(x, y);  
+    set_data(x, y);  
     // Then, initialise the coefficients
-    computeCoefficients();
+    compute_coefficients();
 } 
 
-void GslPolynomialInterpolator::computeCoefficients() {
+void GslPolynomialInterpolator::compute_coefficients() {
     std::size_t n = x_nodes.size();
 
     // Create GSL interpolator (polynomial) and accelerator
@@ -26,7 +26,7 @@ void GslPolynomialInterpolator::computeCoefficients() {
     
 double GslPolynomialInterpolator::operator()(double x) const {
     // We use GSL to calculate the interpolation at the point x
-    checkRange(x);
+    check_range(x);
     return gsl_interp_eval(interp, x_nodes.data(), y_nodes.data(), x, acc);
 }
 

@@ -2,11 +2,11 @@
 
 // Constructor: initialises the data using setData
 LinearInterpolator::LinearInterpolator(const std::vector<double>& x, const std::vector<double>& y) {
-    setData(x, y); // Verify and store data
+    set_data(x, y); // Verify and store data
 }
 
 double LinearInterpolator::operator()(double x) const {
-    checkRange(x);
+    check_range(x);
 
     // Finds the interval [x_nodes[i], x_nodes[i+1]] where x is located
     for (size_t i = 0; i < x_nodes.size() - 1; ++i) {

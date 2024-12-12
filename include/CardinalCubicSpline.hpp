@@ -17,7 +17,7 @@ class CardinalCubicSpline : public Interpolator {
 
 private:
     // Method to check if the steps between nodes are equal
-    void checkSteps(const std::vector<double>& x) const;
+    void check_steps(const std::vector<double>& x) const;
 
     boost::math::interpolators::cardinal_cubic_b_spline<double> spline; // Cubic spline using Boost
 

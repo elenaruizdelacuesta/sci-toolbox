@@ -17,7 +17,7 @@ public:
     double operator()(double x) const override;
 
 private:
-    void computeCoefficients();
+    void compute_coefficients();
     gsl_interp* interp = nullptr;          // Pointer to gsl interpolator
     gsl_interp_accel* acc = nullptr;       // Pointer to gsl accelerator
 };
