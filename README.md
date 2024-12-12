@@ -146,14 +146,14 @@ In this case, we select the exponential function y = e^x as the basis for our in
 To carry out the interpolation, a specific interval was selected (x \in [-4,4] \). Within this interval, 20 test points were generated to evaluate the interpolated function.
 
 ### Results
--**Efficiency**: is measured in terms of interpolation time for all test points. 
-  -**Lagrange** is the most efficient method in both cases (`n = 15` and `n = 30`), followed by Cubic Spline.  
-  -**Newton** shows similar efficiency to Cubic Spline with `n = 15` and a higher efficiency with `n = 30`.
+- **Efficiency**: is measured in terms of interpolation time for all test points. 
+  - **Lagrange** is the most efficient method in both cases (`n = 15` and `n = 30`), followed by Cubic Spline.  
+  - **Newton** shows similar efficiency to Cubic Spline with `n = 15` and a higher efficiency with `n = 30`.
 
--**Accuracy**: is evaluated through Root Mean Square Error (RMSE)
-  -**Lagrange** and **Newton** have the highest accuracy (lowest RMSE) in both (`n = 15` and `n = 30`).
-  -**Cubic Spline**, while less accurate than Lagrange and Newton, performs well with manageable errors in both cases.  
-  -**Linear** is significantly less accurate, especially with a lower number of points (`n = 30`).
+- **Accuracy**: is evaluated through Root Mean Square Error (RMSE)
+  - **Lagrange** and **Newton** have the highest accuracy (lowest RMSE) in both (`n = 15` and `n = 30`).
+  - **Cubic Spline**, while less accurate than Lagrange and Newton, performs well with manageable errors in both cases.  
+  - **Linear** is significantly less accurate, especially with a lower number of points (`n = 30`).
   
 Methods like Lagrange and Cubic Spline showed improved efficiency by taking advantage of third-party libraries that handle the complexities of interpolation more effectively.
 
