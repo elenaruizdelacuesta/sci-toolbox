@@ -143,7 +143,7 @@ The interpolation module provides tools to perform linear, polynomial and cubic 
 ### Implementation
 After building the project, the interpolation module can be tested using the interpol_app. This application demonstrates the accuracy and efficiency of the implemented methods.
 
-In this case, we select the exponential function y = \(e^x\) as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of y using the exponential function, thus providing the necessary data for the interpolation.
+In this case, we select the exponential function y = e^x as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of y using the exponential function, thus providing the necessary data for the interpolation.
   
 To carry out the interpolation, a specific interval was selected (x = [-4,4]). Within this interval, 20 test points were generated to evaluate the interpolated function.
 
@@ -162,6 +162,7 @@ The results are presented in tables, with each table corresponding to a specific
 Additionally, it's important to be cautious with polynomial interpolation, as the Runge phenomenon can occur, especially when the number of nodes becomes large. This phenomenon causes the interpolation to produce oscillatory behavior near the edges, which can lead to decreased accuracy, making the results less reliable.
 
 - **Order of Convergence**: is calculated using the ratio between the mean absolute errors at different sets of nodes. This calculation is generally based on the logarithmic ratio between the errors as nodes are increased in successive steps, providing a measure of how the error decreases as more nodes are added.
+
   - **Linear**: Linear Method has a convergence order of about 0.8, which implies a relatively slow convergence. As the number of nodes increases, the error decreases, but only moderately.
   - **Lagrange and Newton**: Lagrange Method and Newton Method have an order of convergence of approximately 4.2. This indicates a very fast convergence, i.e. the error decreases significantly as more nodes are added.
   - **Cubic Spline**: Cubic Spline has a convergence order of about 1.77, which reflects an intermediate convergence, not as fast as Lagrange or Newton, but faster than Linear.
