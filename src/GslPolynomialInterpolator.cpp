@@ -8,22 +8,22 @@ GslPolynomialInterpolator::GslPolynomialInterpolator(const std::vector<double>& 
     setData(x, y);  
     // Then, initialise the coefficients
     computeCoefficients();
-}
+} 
 
 void GslPolynomialInterpolator::computeCoefficients() {
     std::size_t n = x_nodes.size();
 
-    // We create the GSL interpolator (polynomial) and the accelerator
+    // Create GSL interpolator (polynomial) and accelerator
     interp = gsl_interp_alloc(gsl_interp_polynomial, n);
     acc = gsl_interp_accel_alloc();
 
-     // We set the input data in the gsl interpolator
+    // Set the input data in the gsl interpolator
     int status = gsl_interp_init(interp, x_nodes.data(), y_nodes.data(), n);
     if (status != GSL_SUCCESS) {
         throw std::runtime_error("Error initialising gsl interpolator.");
-    }
+    }  
 }
-
+    
 double GslPolynomialInterpolator::operator()(double x) const {
     // We use GSL to calculate the interpolation at the point x
     checkRange(x);
