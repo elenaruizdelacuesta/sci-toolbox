@@ -21,6 +21,7 @@ Additionally, it includes two corresponding applications to test these modules.
     - [Implementation](#implementation)
     - [Results](#results)
   - [Authors and contributions](#authors-and-contributions)
+  - [References](#references)
 
 ## Project structure
 
@@ -143,9 +144,9 @@ The interpolation module provides tools to perform linear, polynomial and cubic 
 ### Implementation
 After building the project, the interpolation module can be tested using the interpol_app. This application demonstrates the accuracy and efficiency of the implemented methods.
 
-In this case, we select the exponential function $y = e^x$ as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of y using the exponential function, thus providing the necessary data for the interpolation.
+In this case, we select the exponential function $y = e^x$ as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of $y$ using the exponential function, thus providing the necessary data for the interpolation.
   
-To carry out the interpolation, a specific interval was selected (x = [-4,4]). Within this interval, 20 test points were generated to evaluate the interpolated function.
+To carry out the interpolation, a specific interval was selected ($x \in [-4,4]$). Within this interval, 20 test points were generated to evaluate the interpolated function.
 
 ### Results
 In addition to performing interpolation, we conducted a detailed analysis of accuracy and efficiency for each implemented interpolation method. This analysis involved dynamically varying the number of nodes from 5 to 10.
@@ -179,3 +180,13 @@ Interpolation module and documentation
 giovanni.lucarelli@studenti.units.it
 
 Statistics module and documentation.
+
+## References
+
+1. Meseguer, Alvaro. *Fundamentals of Numerical Mathematics for Physicists and Engineers*. United States: Wiley, 2020.
+
+2. [Rate of Convergence - Order Estimation](https://en.wikipedia.org/wiki/Rate_of_convergence#Order_estimation). Wikipedia.
+
+3. [C++ `std::variant`](https://en.cppreference.com/w/cpp/utility/variant). cppreference.com.
+
+4. [C++ `std::optional`](https://en.cppreference.com/w/cpp/utility/optional). cppreference.com.
