@@ -200,7 +200,7 @@ void calculateConvergenceOrder(const std::vector<double>& rmse_n1, const std::ve
 
 int main() {
     // Interval and number of nodes for f(x) = x^6
-    double a_f1 = -4.0;
+    double a_f1 = -4;
     double b_f1 = 4.0;
     int n_f1_1 = 15;
     int n_f1_2 = 30;
@@ -225,11 +225,21 @@ int main() {
     }
 
     // Test points
+    
+    // Test points
     std::vector<double> test_points_f1;
-    int num_test_points = 20; // Por ejemplo
-    double step = ((b_f1-a_f1) / (num_test_points - 1)); // División uniforme de [-4, 4]
+    int num_test_points = 20; 
+    double step = ((b_f1 - a_f1) / (num_test_points - 1)); 
+
     for (int i = 0; i < num_test_points; ++i) {
-        test_points_f1.push_back(-4 + i * step);
+        double x = a_f1 + i * step;
+        // Asegurar que no coincida exactamente con a_f1 o b_f1
+        if (i == 0) {
+            x += 0.1; // Pequeña corrección al inicio
+        } else if (i == num_test_points - 1) {
+            x -= 0.1; // Pequeña corrección al final
+        }
+        test_points_f1.push_back(x);
     }
     
     // Compare interpolation methods for f(x) = x^6

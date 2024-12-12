@@ -126,6 +126,40 @@ for (const auto& row : df) {
 
 
 ## Module B: Interpolation
+The interpolation module provides tools to perform linear, polynomial and cubic spline interpolations. It is designed to handle data efficiently and produce accurate interpolated values for a given set of points. 
+
+### Features
+- **Linear Interpolation**
+  Implements piecewise linear interpolation for a given set of data points. Suitable for quick approximations with moderate accuracy.
+
+- **Polynomial Interpolation**  
+  - **Lagrange Interpolation**: Uses the Lagrange form of the interpolating polynomial. Implemented using a third-party library (GSL)
+  - **Newton Interpolation**: Implements the Newton divided difference formula for efficient computation of polynomials.
+- **Cubic Spline Interpolation**  
+  - **Cardinal Cubic B-Spline**: Implements smooth interpolation using a cubic spline basis, providing high accuracy and continuous second derivatives. Implemented using a third-party library (BOOST).
+
+  ### Usage
+  After building the project, the interpolation module can be tested using the interpol_app. This application demonstrates the accuracy and efficiency of the implemented methods.
+
+  In this case, we select the exponential function y = e^x as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of y using the exponential function, thus providing the necessary data for the interpolation.
+  
+  To carry out the interpolation, a specific interval was selected x \in [-4,4]. Within this interval, 20 test points were generated to evaluate the interpolated function.
+
+### Results
+-**Efficiency**: is measured in terms of interpolation time for all test points. 
+  -**Lagrange** is the most efficient method in both cases (`n = 15` and `n = 30`), followed by Cubic Spline.  
+  -**Newton** shows similar efficiency to Cubic Spline with `n = 15` and a higher efficiency with `n = 30`.
+
+-**Accuracy**: is evaluated through Root Mean Square Error (RMSE)
+  -**Lagrange** and **Newton** have the highest accuracy (lowest RMSE) in both (`n = 15` and `n = 30`).
+  -**Cubic Spline**, while less accurate than Lagrange and Newton, performs well with manageable errors in both cases.  
+  -**Linear** is significantly less accurate, especially with a lower number of points (`n = 30`).
+  
+Methods like Lagrange and Cubic Spline showed improved efficiency by taking advantage of third-party libraries that handle the complexities of interpolation more effectively.
+
+Additionally, it's important to be cautious with polynomial interpolation, as the Runge phenomenon can occur, especially when the number of nodes becomes large. This phenomenon causes the interpolation to produce oscillatory behavior near the edges, which can lead to decreased accuracy, making the results less reliable.
+
+
 
 ## Authors and contributions
 
