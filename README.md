@@ -20,6 +20,9 @@ Additionally, it includes two corresponding applications to test these modules.
     - [Features](#features)
     - [Implementation](#implementation)
     - [Results](#results)
+      - [Efficiency](#efficiency)
+      - [Accuracy](#accuracy)
+      - [Order of Convergence](#order-of-convergence)
   - [Authors and contributions](#authors-and-contributions)
   - [References](#references)
 
@@ -142,31 +145,40 @@ The interpolation module provides tools to perform linear, polynomial and cubic 
 - **Cubic Spline Interpolation**: implements smooth interpolation using a cubic spline basis, providing high accuracy and continuous second derivatives. Implemented using a third-party library (BOOST).
 
 ### Implementation
-After building the project, the interpolation module can be tested using the interpol_app. This application demonstrates the accuracy and efficiency of the implemented methods.
+After building the project, the interpolation module can be tested using the `interpol_app`. This application demonstrates the accuracy and efficiency of the implemented methods.
 
-In this case, we select the exponential function $y = e^x$ as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using Boost, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of $y$ using the exponential function, thus providing the necessary data for the interpolation.
+In this case, we select the exponential function $y = e^x$ as the basis for our interpolation. In order to fulfil the specific requirements of the cardinal cubic B-spline interpolation using BOOST, we generate equispaced nodes along the desired interval. From these equispaced nodes, we compute the corresponding values of $y$ using the exponential function, thus providing the necessary data for the interpolation.
   
 To carry out the interpolation, a specific interval was selected ($x \in [-4,4]$). Within this interval, 20 test points were generated to evaluate the interpolated function.
 
 ### Results
-In addition to performing interpolation, we conducted a detailed analysis of accuracy and efficiency for each implemented interpolation method. This analysis involved dynamically varying the number of nodes from 5 to 10.
 
-The results are presented in tables, with each table corresponding to a specific node count and method.
+We conducted a detailed analysis of both **accuracy** and **efficiency** for each implemented interpolation method, varying the number of nodes dynamically from 5 to 10. The results are summarized in tables, where each table corresponds to a specific node count and interpolation method.
 
-- **Efficiency**: is measured in terms of interpolation time for all test points. **Lagrange** is the most efficient method followed by **Newton**.  
+#### Efficiency  
+Efficiency is measured by the interpolation time for all test points.  
+- **Lagrange** is the most efficient method, followed closely by **Newton**.  
 
-- **Accuracy**: is evaluated through Mean Absolute Error (MAE).
-  - **Lagrange** and **Newton** have the highest accuracy (lowest MAE).
-  - **Cubic Spline**, while less accurate than Lagrange and Newton, performs well with manageable errors.
-  - **Linear** is significantly less accurate, especially with a lower number of points (`n = 5`).
+#### Accuracy  
+Accuracy is evaluated using the **Mean Absolute Error (MAE)**:  
+- **Lagrange** and **Newton** methods provide the highest accuracy (i.e., the lowest MAE).  
+- **Cubic Spline** offers good accuracy, though slightly less accurate compared to Lagrange and Newton.  
+- **Linear** interpolation is the least accurate, particularly when using fewer nodes (e.g., `n = 5`).  
 
-Additionally, it's important to be cautious with polynomial interpolation, as the Runge phenomenon can occur, especially when the number of nodes becomes large. This phenomenon causes the interpolation to produce oscillatory behavior near the edges, which can lead to decreased accuracy, making the results less reliable.
+Additionally, caution is advised with polynomial interpolation, especially as the number of nodes increases. This can lead to [*Runge's phenomenon*](https://en.wikipedia.org/wiki/Runge%27s_phenomenon), where oscillatory behavior near the edges causes decreased accuracy, making the interpolation less reliable.
 
-- **Order of Convergence**: is calculated using the ratio between the mean absolute errors at different sets of nodes. This calculation is generally based on the logarithmic ratio between the errors as nodes are increased in successive steps, providing a measure of how the error decreases as more nodes are added.
+#### Order of Convergence
 
-  - **Linear**: Linear Method has a convergence order of about 0.8, which implies a relatively slow convergence. As the number of nodes increases, the error decreases, but only moderately.
-  - **Lagrange and Newton**: Lagrange Method and Newton Method have an order of convergence of approximately 4.2. This indicates a very fast convergence, i.e. the error decreases significantly as more nodes are added.
-  - **Cubic Spline**: Cubic Spline has a convergence order of about 1.77, which reflects an intermediate convergence, not as fast as Lagrange or Newton, but faster than Linear.
+The **Order of Convergence** has been calculated using the ratio between the mean absolute errors at different sets of nodes. This typically involves a logarithmic comparison of the errors as the number of nodes increases, providing insight into how quickly the error decreases with additional nodes. The results for various interpolation methods are as follows:
+
+- **Linear Interpolation**:  
+  Exhibits a convergence order of approximately **0.8**, indicating slow convergence. The error decreases moderately as more nodes are added.
+
+- **Lagrange and Newton Interpolation**:  
+  Both methods achieve a convergence order of about **4.2**, reflecting very rapid convergence. The error decreases significantly with additional nodes.
+
+- **Cubic Spline Interpolation**:  
+  Has a convergence order of approximately **1.77**, indicating moderate convergence. It improves faster than the linear method but is slower compared to Lagrange and Newton.
 
 
 ## Authors and contributions
