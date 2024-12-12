@@ -18,7 +18,7 @@ double CardinalCubicSpline::operator()(double x) const {
 // Method to check if the steps between nodes are equal
 void CardinalCubicSpline::check_steps(const std::vector<double>& x) const {
     double step = x[1] - x[0]; // Expected step between nodes
-    double tolerance = 1e-9;  // Tolerance for comparison
+    constexpr double tolerance = 1e-9;  // Tolerance for comparison
     for (size_t i = 1; i < x.size() - 1; ++i) {
         double actualStep = x[i+1] - x[i];
         if (std::fabs(actualStep - step) > tolerance) {
